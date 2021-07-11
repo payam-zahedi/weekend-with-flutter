@@ -31,6 +31,9 @@ class Home extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
           color: Colors.black,
           ),
+          child: Spinner(
+            color: Colors.green,
+          ),
         ),
       ),
     );
