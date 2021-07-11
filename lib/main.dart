@@ -22,15 +22,11 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black87,
+      backgroundColor: Colors.black,
       body: Center(
         child: Container(
-          width: 400,
-          height: 400,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-          color: Colors.black,
-          ),
+          width: 600,
+          height: 500,
           child: Spinner(
             color: Colors.green,
           ),

@@ -7,15 +7,22 @@ class Spinner extends StatefulWidget {
   const Spinner({
     Key? key,
     required this.color,
+    this.size = 300,
     this.ringWidth = 5.0,
+    this.ringCount = 7,
     this.duration = const Duration(milliseconds: 4000),
     this.controller,
   }) : super(key: key);
 
   final Color color;
+  final double size;
+
   final double ringWidth;
+  final int ringCount;
+
   final Duration duration;
   final AnimationController? controller;
+
 
   @override
   _SpinnerState createState() => _SpinnerState();
@@ -49,11 +56,12 @@ class _SpinnerState extends State<Spinner> with SingleTickerProviderStateMixin {
       child: AnimatedBuilder(
         builder: (BuildContext context, Widget? child) {
           return CustomPaint(
-            child: SizedBox.fromSize(size: Size.square(300)),
+            child: SizedBox.fromSize(size: Size.square(widget.size)),
             painter: _SpinnerPainter(
               _animation.value,
               ringWidth: widget.ringWidth,
               color: widget.color,
+              ringCount: widget.ringCount,
             ),
           );
         },
@@ -67,7 +75,8 @@ class _SpinnerPainter extends CustomPainter {
   _SpinnerPainter(
     this.rotateValue, {
     required Color color,
-    this.ringWidth = 5,
+    required this.ringWidth,
+    required this.ringCount,
   }) : spinnerPaint = Paint()
           ..color = color
           ..strokeWidth = 1
@@ -76,20 +85,17 @@ class _SpinnerPainter extends CustomPainter {
   final Paint spinnerPaint;
   final double rotateValue;
   final double ringWidth;
+  final int ringCount;
 
   @override
   void paint(Canvas canvas, Size size) {
-    _drawSpin(canvas, size, spinnerPaint, 1);
-    _drawSpin(canvas, size, spinnerPaint, 2);
-    _drawSpin(canvas, size, spinnerPaint, 3);
-    _drawSpin(canvas, size, spinnerPaint, 4);
-    _drawSpin(canvas, size, spinnerPaint, 5);
-    _drawSpin(canvas, size, spinnerPaint, 6);
-    _drawSpin(canvas, size, spinnerPaint, 7);
+    for (var i = 1; i <= ringCount; i++) {
+      _drawSpin(canvas, size, spinnerPaint, i);
+    }
   }
 
   void _drawSpin(Canvas canvas, Size size, Paint paint, int scale) {
-    final scaledSize = size * (scale / 7);
+    final scaledSize = size * (scale / ringCount);
     final spinnerSize = Size.square(scaledSize.longestSide);
 
     final startX = spinnerSize.width / 2;
@@ -102,7 +108,7 @@ class _SpinnerPainter extends CustomPainter {
 
     final borderWith = ringWidth;
 
-    final scaleFactor = -(scale - 8);
+    final scaleFactor = -(scale - (ringCount+1));
 
     final path = Path();
     path.moveTo(startX, startY);
@@ -133,6 +139,8 @@ class _SpinnerPainter extends CustomPainter {
     canvas.translate(offset.dx, offset.dy);
   }
 
+  /// I use the following resource to calculate rotation of the canvas
+  /// https://stackoverflow.com/a/54336099/9689717
   void _rotateCanvas(Canvas canvas, Size size, double angle) {
     final double r =
         sqrt(size.width * size.width + size.height * size.height) / 2;
@@ -152,6 +160,6 @@ class _SpinnerPainter extends CustomPainter {
   bool shouldRepaint(_SpinnerPainter oldDelegate) =>
       oldDelegate.rotateValue != rotateValue ||
       oldDelegate.ringWidth != ringWidth ||
+      oldDelegate.ringCount != ringCount ||
       oldDelegate.spinnerPaint != spinnerPaint;
-
 }
