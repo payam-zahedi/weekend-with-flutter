@@ -7,15 +7,13 @@ class Spinner extends StatefulWidget {
   const Spinner({
     Key? key,
     required this.color,
-    this.lineWidth = 7.0,
-    this.size = 50.0,
+    this.ringWidth = 5.0,
     this.duration = const Duration(milliseconds: 4000),
     this.controller,
   }) : super(key: key);
 
   final Color color;
-  final double lineWidth;
-  final double size;
+  final double ringWidth;
   final Duration duration;
   final AnimationController? controller;
 
@@ -35,6 +33,7 @@ class _SpinnerState extends State<Spinner> with SingleTickerProviderStateMixin {
         AnimationController(vsync: this, duration: widget.duration))
       ..addListener(() => setState(() {}))
       ..repeat();
+
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
   }
 
@@ -51,9 +50,9 @@ class _SpinnerState extends State<Spinner> with SingleTickerProviderStateMixin {
         builder: (BuildContext context, Widget? child) {
           return CustomPaint(
             child: SizedBox.fromSize(size: Size.square(300)),
-            painter: _DualRingPainter(
+            painter: _SpinnerPainter(
               _animation.value,
-              ringWidth: 5,
+              ringWidth: widget.ringWidth,
               color: widget.color,
             ),
           );
@@ -64,29 +63,29 @@ class _SpinnerState extends State<Spinner> with SingleTickerProviderStateMixin {
   }
 }
 
-class _DualRingPainter extends CustomPainter {
-  _DualRingPainter(
+class _SpinnerPainter extends CustomPainter {
+  _SpinnerPainter(
     this.rotateValue, {
     required Color color,
     this.ringWidth = 5,
-  }) : ringPaint = Paint()
+  }) : spinnerPaint = Paint()
           ..color = color
           ..strokeWidth = 1
           ..style = PaintingStyle.fill;
 
-  final Paint ringPaint;
+  final Paint spinnerPaint;
   final double rotateValue;
   final double ringWidth;
 
   @override
   void paint(Canvas canvas, Size size) {
-    _drawSpin(canvas, size, ringPaint, 1);
-    _drawSpin(canvas, size, ringPaint, 2);
-    _drawSpin(canvas, size, ringPaint, 3);
-    _drawSpin(canvas, size, ringPaint, 4);
-    _drawSpin(canvas, size, ringPaint, 5);
-    _drawSpin(canvas, size, ringPaint, 6);
-    _drawSpin(canvas, size, ringPaint, 7);
+    _drawSpin(canvas, size, spinnerPaint, 1);
+    _drawSpin(canvas, size, spinnerPaint, 2);
+    _drawSpin(canvas, size, spinnerPaint, 3);
+    _drawSpin(canvas, size, spinnerPaint, 4);
+    _drawSpin(canvas, size, spinnerPaint, 5);
+    _drawSpin(canvas, size, spinnerPaint, 6);
+    _drawSpin(canvas, size, spinnerPaint, 7);
   }
 
   void _drawSpin(Canvas canvas, Size size, Paint paint, int scale) {
@@ -123,7 +122,7 @@ class _DualRingPainter extends CustomPainter {
     _rotateCanvas(
       canvas,
       spinnerSize,
-      getRadian(rotateValue * 360 * scaleFactor),
+      _getRadian(rotateValue * 360 * scaleFactor),
     );
     canvas.drawPath(path, paint);
     canvas.restore();
@@ -147,8 +146,12 @@ class _DualRingPainter extends CustomPainter {
     canvas.rotate(angle);
   }
 
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => true;
+  double _getRadian(double angle) => math.pi / 180 * angle;
 
-  double getRadian(double angle) => math.pi / 180 * angle;
+  @override
+  bool shouldRepaint(_SpinnerPainter oldDelegate) =>
+      oldDelegate.rotateValue != rotateValue ||
+      oldDelegate.ringWidth != ringWidth ||
+      oldDelegate.spinnerPaint != spinnerPaint;
+
 }
