@@ -1,16 +1,14 @@
-# weekend_with_flutter
+# Weekend With Flutter
+ This is my new challenge. Every weekend, I want to implement challenging UI & digital designs using Flutter. you can join me with #WeekendWithFlutter hashtag in twitter.
 
-A new Flutter application.
+### Solved Challenges
 
-## Getting Started
+#### Ring Spinners
+I find this graphic in [this tweet](https://twitter.com/payamzahedi95/status/1412478330335645697 "this tweet").
 
-This project is a starting point for a Flutter application.
+This is how the result looks like.
 
-A few resources to get you started if this is your first Flutter project:
+| Source | Result |
+| :------------: | :------------: |
+| ![Source](https://raw.githubusercontent.com/payam-zahedi/weekend-with-flutter/master/resources/gif/spinner/source.gif "Source") | ![result](https://raw.githubusercontent.com/payam-zahedi/weekend-with-flutter/master/resources/gif/spinner/result.gif "result") |
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
