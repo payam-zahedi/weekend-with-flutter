@@ -1,7 +1,5 @@
-
 import 'package:flutter/widgets.dart';
 import 'package:weekend_with_flutter/src/widget/util/util.dart';
-
 
 class Spinner extends StatefulWidget {
   const Spinner({
@@ -136,7 +134,6 @@ class _SpinnerPainter extends CustomPainter {
     final offset = ((size - spinnerSize) as Offset) / 2;
     canvas.translate(offset.dx, offset.dy);
   }
-
 
   @override
   bool shouldRepaint(_SpinnerPainter oldDelegate) =>

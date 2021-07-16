@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:weekend_with_flutter/src/widget/hypno_cycle.dart';
 import 'src/widget/spinner.dart';
 
 void main() {
@@ -25,11 +26,7 @@ class Home extends StatelessWidget {
       backgroundColor: Colors.black,
       body: Center(
         child: Container(
-          width: 600,
-          height: 500,
-          child: Spinner(
-            color: Colors.green,
-          ),
+          child: HypnoCycle(),
         ),
       ),
     );
