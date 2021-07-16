@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weekend_with_flutter/src/spinner.dart';
+import 'src/widget/spinner.dart';
 
 void main() {
   runApp(MyApp());

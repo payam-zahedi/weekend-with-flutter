@@ -1,7 +1,7 @@
-import 'dart:math' as math;
-import 'dart:math';
 
 import 'package:flutter/widgets.dart';
+import 'package:weekend_with_flutter/src/widget/util/util.dart';
+
 
 class Spinner extends StatefulWidget {
   const Spinner({
@@ -22,7 +22,6 @@ class Spinner extends StatefulWidget {
 
   final Duration duration;
   final AnimationController? controller;
-
 
   @override
   _SpinnerState createState() => _SpinnerState();
@@ -108,7 +107,7 @@ class _SpinnerPainter extends CustomPainter {
 
     final borderWith = ringWidth;
 
-    final scaleFactor = -(scale - (ringCount+1));
+    final scaleFactor = -(scale - (ringCount + 1));
 
     final path = Path();
     path.moveTo(startX, startY);
@@ -125,10 +124,9 @@ class _SpinnerPainter extends CustomPainter {
 
     canvas.save();
     _translateCanvas(canvas, size, spinnerSize);
-    _rotateCanvas(
-      canvas,
+    canvas.rotateZ(
+      getRadian(rotateValue * 360 * scaleFactor),
       spinnerSize,
-      _getRadian(rotateValue * 360 * scaleFactor),
     );
     canvas.drawPath(path, paint);
     canvas.restore();
@@ -139,22 +137,6 @@ class _SpinnerPainter extends CustomPainter {
     canvas.translate(offset.dx, offset.dy);
   }
 
-  /// I use the following resource to calculate rotation of the canvas
-  /// https://stackoverflow.com/a/54336099/9689717
-  void _rotateCanvas(Canvas canvas, Size size, double angle) {
-    final double r =
-        sqrt(size.width * size.width + size.height * size.height) / 2;
-    final alpha = atan(size.height / size.width);
-    final beta = alpha + angle;
-    final shiftY = r * sin(beta);
-    final shiftX = r * cos(beta);
-    final translateX = size.width / 2 - shiftX;
-    final translateY = size.height / 2 - shiftY;
-    canvas.translate(translateX, translateY);
-    canvas.rotate(angle);
-  }
-
-  double _getRadian(double angle) => math.pi / 180 * angle;
 
   @override
   bool shouldRepaint(_SpinnerPainter oldDelegate) =>
