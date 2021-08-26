@@ -1,5 +1,5 @@
 import 'package:flutter/widgets.dart';
-import 'package:weekend_with_flutter/src/widget/util/util.dart';
+import 'package:weekend_with_flutter/src/util/util.dart';
 
 class Spinner extends StatefulWidget {
   const Spinner({
